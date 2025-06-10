@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DERMAREPAIR®: Evidências e Resultados no Transplante Capilar</title>
+    <!-- Chosen Palette: Warm Neutrals (#F8F7F4 background, #333333 text, #3B82F6 accent) -->
+    <!-- Application Structure Plan: Uma SPA narrativa de múltiplas seções. A estrutura flui do problema (O Desafio) para os problemas específicos do paciente, depois para a solução (DERMAREPAIR®), apoiada por dados (Evidências), seguida pela Experiência Clínica, Proposta de Valor, aplicação prática (Protocolo, Proposta de Teste) e informações sobre a empresa. Essa estrutura guia o profissional médico por um argumento lógico, construindo credibilidade a cada passo, o que é mais eficaz para este público do que uma página de marketing simples. A navegação fixa permite acesso fácil e não linear a pontos de dados específicos. -->
+    <!-- Visualization & Content Choices:
+        - Desafio/Solução/Problemas do Paciente: Texto e um diagrama interativo baseado em CSS para explicar os 5 fatores de crescimento (Objetivo: Organizar/Informar, Método: HTML/CSS, Interação: Hover).
+        - Evidências: Cards de estatísticas dinâmicas e um gráfico de barras Chart.js para a redução do tempo de cicatrização (Objetivo: Comparar, Biblioteca: Chart.js, Interação: Tooltips ao passar o mouse). Foco na melhoria da pele.
+        - Experiência Clínica/Proposta de Valor/Protocolo/Quem Somos: Texto estruturado com ícones (HTML/CSS) e listas para clareza e escaneabilidade (Objetivo: Informar/Organizar). Tabela HTML para detalhes dos fatores de crescimento.
+        - Justificativa: Essa mistura de texto, diagramas, gráficos e tabelas atende a um público científico, apresentando informações de forma clara, com respaldo de dados e facilmente digerível, evitando visuais puramente de marketing. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F8F7F4;
+            color: #333333;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px;
+            max-height: 400px;
+        }
+        @media (max-width: 768px) {
+            .chart-container {
+                height: 300px;
+            }
+        }
+        .fade-in-section {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .fade-in-section.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .factor-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .factor-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 2rem;
+            background-color: #fff;
+            border-radius: 0.75rem;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+        }
+        th, td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        th {
+            background-color: #f3f4f6;
+            font-weight: 600;
+            color: #4b5563;
+        }
+        tr:last-child td {
+            border-bottom: none;
+        }
+        .timeline-item {
+            position: relative;
+            padding-left: 2.5rem;
+            margin-bottom: 2rem;
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 0.5rem;
+            top: 0.5rem;
+            width: 0.75rem;
+            height: 0.75rem;
+            border-radius: 50%;
+            background-color: #3B82F6;
+            z-index: 10;
+        }
+        .timeline-item:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            left: 0.875rem;
+            top: 1.25rem;
+            width: 2px;
+            height: calc(100% - 1.25rem);
+            background-color: #e5e7eb;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <header class="bg-white/80 backdrop-blur-lg shadow-sm sticky top-0 z-50">
+        <nav class="container mx-auto px-6 py-3 flex justify-between items-center">
+            <div class="text-xl font-bold text-gray-800">DERMAREPAIR®</div>
+            <div class="hidden md:flex space-x-6">
+                <a href="#desafio" class="text-gray-600 hover:text-blue-600">O Desafio</a>
+                <a href="#problemas" class="text-gray-600 hover:text-blue-600">Problemas Comuns</a>
+                <a href="#solucao" class="text-gray-600 hover:text-blue-600">A Solução</a>
+                <a href="#evidencias" class="text-gray-600 hover:text-blue-600">Evidências</a>
+                <a href="#experiencia" class="text-gray-600 hover:text-blue-600">Experiência Clínica</a>
+                <a href="#valor" class="text-gray-600 hover:text-blue-600">Proposta de Valor</a>
+                <a href="#protocolo" class="text-gray-600 hover:text-blue-600">Protocolo</a>
+                <a href="#teste" class="text-gray-600 hover:text-blue-600">Teste Clínico</a>
+                <a href="#quem-somos" class="text-gray-600 hover:text-blue-600">Quem Somos</a>
+            </div>
+             <a href="#teste" class="md:hidden bg-blue-600 text-white font-semibold px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">Iniciar Teste</a>
+        </nav>
+    </header>
+
+    <main>
+        <section id="hero" class="py-20 md:py-32 bg-white">
+            <div class="container mx-auto px-6 text-center">
+                <h1 class="text-4xl md:text-6xl font-bold text-gray-800 mb-4">Otimizando a Cicatrização e Resultados em Transplantes Capilares</h1>
+                <p class="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto mb-8">Descubra como DERMAREPAIR® eleva o padrão do pós-operatório, melhora a satisfação do paciente e consolida a excelência da sua prática clínica.</p>
+                <a href="#teste" class="bg-blue-600 text-white font-bold px-8 py-4 rounded-lg hover:bg-blue-700 transition-colors text-lg">Solicitar Teste Clínico</a>
+            </div>
+        </section>
+
+        <section id="desafio" class="py-16 md:py-24 fade-in-section">
+            <div class="container mx-auto px-6">
+                 <h2 class="text-3xl md:text-4xl font-bold text-center mb-4">O Desafio Clínico no Transplante Capilar</h2>
+                 <p class="text-center text-gray-600 max-w-3xl mx-auto mb-12">No transplante capilar, a atenção primária costuma recair sobre a área receptora. Contudo, a qualidade da cicatrização na área doadora é igualmente crucial para o resultado estético e funcional, preservando a elasticidade, vascularização e integridade da pele. A recuperação adequada da área doadora influencia diretamente a satisfação do paciente e a possibilidade de futuros procedimentos.</p>
+                <div class="grid md:grid-cols-3 gap-8 text-center">
+                    <div class="bg-white p-6 rounded-xl shadow-md">
+                        <div class="text-4xl text-blue-600 mb-4">✓</div>
+                        <h3 class="text-xl font-semibold mb-2">Qualidade da Cicatrização</h3>
+                        <p class="text-gray-600">Preservar a elasticidade e integridade da pele da área doadora é fundamental para um resultado estético natural e imperceptível.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-md">
+                        <div class="text-4xl text-blue-600 mb-4">✓</div>
+                        <h3 class="text-xl font-semibold mb-2">Satisfação do Paciente</h3>
+                        <p class="text-gray-600">Um pós-operatório com recuperação rápida, menor desconforto e resultado superior na área doadora eleva a percepção de sucesso do paciente.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-md">
+                        <div class="text-4xl text-blue-600 mb-4">✓</div>
+                        <h3 class="text-xl font-semibold mb-2">Viabilidade Futura</h3>
+                        <p class="text-gray-600">Uma área doadora bem preservada mantém as opções abertas para futuros procedimentos, caso sejam necessários.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="problemas" class="py-16 md:py-24 bg-white fade-in-section">
+            <div class="container mx-auto px-6">
+                <h2 class="text-3xl md:text-4xl font-bold text-center mb-4">Problemas e Desconfortos Comuns na Área Doadora</h2>
+                <p class="text-center text-gray-600 max-w-3xl mx-auto mb-12">Apesar dos avanços nas técnicas de transplante capilar, a área doadora pode apresentar desafios no pós-operatório que afetam o conforto e a recuperação do paciente. DERMAREPAIR® foi desenvolvido para mitigar esses problemas.</p>
+                <div class="grid md:grid-cols-3 gap-8 text-center">
+                    <div class="bg-gray-50 p-6 rounded-xl shadow-md">
+                        <div class="text-4xl text-red-600 mb-4">●</div>
+                        <h3 class="text-xl font-semibold mb-2">Cicatrização Lenta/Deficiente</h3>
+                        <p class="text-gray-600">O processo de cicatrização pode ser prolongado, impactando o tempo de recuperação e o resultado estético.</p>
+                    </div>
+                    <div class="bg-gray-50 p-6 rounded-xl shadow-md">
+                        <div class="text-4xl text-red-600 mb-4">●</div>
+                        <h3 class="text-xl font-semibold mb-2">Desconforto e Irritação</h3>
+                        <p class="text-gray-600">Coceira, sensibilidade e vermelhidão são comuns na área doadora, causando incômodo significativo ao paciente.</p>
+                    </div>
+                    <div class="bg-gray-50 p-6 rounded-xl shadow-md">
+                        <div class="text-4xl text-red-600 mb-4">●</div>
+                        <h3 class="text-xl font-semibold mb-2">Qualidade Estética Inferior</h3>
+                        <p class="text-gray-600">Cicatrizes visíveis, pele com textura alterada ou perda de elasticidade podem comprometer o resultado final.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="solucao" class="py-16 md:py-24 bg-blue-50 fade-in-section">
+            <div class="container mx-auto px-6">
+                <h2 class="text-3xl md:text-4xl font-bold text-center mb-4">A Solução: DERMAREPAIR® e o Complexo GFC</h2>
+                <p class="text-center text-gray-600 max-w-3xl mx-auto mb-12">DERMAREPAIR® introduz uma abordagem científica para o cuidado pós-operatório. No centro de sua fórmula está o exclusivo Complexo de Fatores de Crescimento (GFC), uma sinergia de cinco proteínas sinalizadoras que orquestram a reparação e regeneração tecidual, mimetizando o processo fisiológico natural do corpo.</p>
+                
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 mb-12">
+                    <div class="factor-card bg-white p-4 rounded-lg text-center border border-gray-200 shadow-sm">
+                        <h3 class="font-bold text-lg text-blue-700">PDGF</h3>
+                        <p class="text-sm text-gray-600 mt-2">Atrai células especializadas e estimula a angiogênese.</p>
+                    </div>
+                    <div class="factor-card bg-white p-4 rounded-lg text-center border border-gray-200 shadow-sm">
+                        <h3 class="font-bold text-lg text-blue-700">TGF</h3>
+                        <p class="text-sm text-gray-600 mt-2">Estimula a síntese de matriz extracelular (MEC) e colágeno.</p>
+                    </div>
+                    <div class="factor-card bg-white p-4 rounded-lg text-center border border-gray-200 shadow-sm">
+                        <h3 class="font-bold text-lg text-blue-700">FGF</h3>
+                        <p class="text-sm text-gray-600 mt-2">Apoia a sobrevivência celular em estresse e a angiogênese.</p>
+                    </div>
+                    <div class="factor-card bg-white p-4 rounded-lg text-center border border-gray-200 shadow-sm">
+                        <h3 class="font-bold text-lg text-blue-700">EGF</h3>
+                        <p class="text-sm text-gray-600 mt-2">Promove a proliferação de queratinócitos e a deposição de MEC.</p>
+                    </div>
+                    <div class="factor-card bg-white p-4 rounded-lg text-center border border-gray-200 shadow-sm col-span-2 md:col-span-1 lg:col-span-1">
+                        <h3 class="font-bold text-lg text-blue-700">IGF</h3>
+                        <p class="text-sm text-gray-600 mt-2">Modula a transição da fase inflamatória para a proliferativa.</p>
+                    </div>
+                </div>
+
+                <div class="max-w-4xl mx-auto">
+                    <h3 class="text-2xl font-bold text-center mb-6">Diferenciais do DERMAREPAIR®</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Característica</th>
+                                <th>Detalhe Técnico</th>
+                                <th>Impacto Clínico</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Origem do GFC</td>
+                                <td>Soro de leite bovino concentrado e ativado não-enzimaticamente</td>
+                                <td>Biocompatibilidade e alta biodisponibilidade</td>
+                            </tr>
+                            <tr>
+                                <td>Composição Exclusiva</td>
+                                <td>Único creme com 5 FCs essenciais em sinergia (PDGF+TGF+FGF+EGF+IGF)</td>
+                                <td>Reprodução integral e otimizada do processo fisiológico de reparação</td>
+                            </tr>
+                            <tr>
+                                <td>Eficácia Validada</td>
+                                <td>+1900% síntese de ácido hialurônico; +140% colágeno I (in vivo)</td>
+                                <td>Melhoria objetiva da qualidade tecidual, hidratação e firmeza da pele cicatricial</td>
+                            </tr>
+                            <tr>
+                                <td>Segurança</td>
+                                <td>Não irritante; sem parabenos, petrolatos ou parafinas</td>
+                                <td>Perfil ideal para uso pós-operatório sensível e prolongado</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <section id="evidencias" class="py-16 md:py-24 fade-in-section">
+            <div class="container mx-auto px-6">
+                <h2 class="text-3xl md:text-4xl font-bold text-center mb-4">Evidências Científicas e Resultados Clínicos</h2>
+                <p class="text-center text-gray-600 max-w-3xl mx-auto mb-12">A eficácia do DERMAREPAIR® é suportada por dados quantitativos robustos de estudos laboratoriais e clínicos. Esta seção apresenta os principais resultados que demonstram o impacto do produto na regeneração tecidual e nos desfechos da cicatrização da pele.</p>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+                    <div class="bg-white p-6 rounded-xl shadow-lg text-center">
+                        <p class="text-5xl font-bold text-blue-600">+1900%</p>
+                        <p class="mt-2 text-gray-700">Aumento na Síntese de Ácido Hialurônico</p>
+                    </div>
+                     <div class="bg-white p-6 rounded-xl shadow-lg text-center">
+                        <p class="text-5xl font-bold text-blue-600">+140%</p>
+                        <p class="mt-2 text-gray-700">Aumento na Síntese de Colágeno Tipo I</p>
+                    </div>
+                     <div class="bg-white p-6 rounded-xl shadow-lg text-center lg:col-span-1 md:col-span-2">
+                        <p class="text-5xl font-bold text-blue-600">+220%</p>
+                        <p class="mt-2 text-gray-700">Aumento na Síntese de Fibronectina</p>
+                    </div>
+                </div>
+                <div class="max-w-xl mx-auto bg-white p-6 rounded-xl shadow-lg">
+                    <h3 class="text-xl font-semibold text-center mb-4">Redução no Tempo de Cicatrização (Área Doadora)</h3>
+                    <div class="chart-container">
+                        <canvas id="healingTimeChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="experiencia" class="py-16 md:py-24 fade-in-section">
+            <div class="container mx-auto px-6">
+                <h2 class="text-3xl md:text-4xl font-bold text-center mb-4">Experiência Clínica Internacional</h2>
+                <p class="text-center text-gray-600 max-w-3xl mx-auto mb-12">A confiança no DERMAREPAIR® é construída sobre resultados consistentemente positivos em cenários clínicos reais. O produto é parte integrante dos protocolos de centros de transplante capilar na Europa e no Oriente Médio, com um histórico comprovado de sucesso e satisfação.</p>
+                <div class="bg-white rounded-xl shadow-lg p-8 max-w-5xl mx-auto">
+                    <h3 class="text-2xl font-bold text-center mb-6">Case Study: INSPARYA Group (PT, ES, IT, Omã)</h3>
+                    <div class="grid md:grid-cols-3 gap-8 text-center">
+                        <div>
+                            <p class="text-4xl font-bold text-blue-600">5+ anos</p>
+                            <p class="mt-1 text-gray-600">de uso contínuo em protocolo</p>
+                        </div>
+                        <div>
+                            <p class="text-4xl font-bold text-blue-600">10.000+</p>
+                            <p class="mt-1 text-gray-600">transplantes realizados</p>
+                        </div>
+                        <div>
+                            <p class="text-4xl font-bold text-blue-600">94%</p>
+                            <p class="mt-1 text-gray-600">de satisfação dos pacientes</p>
+                        </div>
+                    </div>
+                    <div class="mt-12 text-center text-gray-700">
+                         <h4 class="text-xl font-semibold mb-3">Resultados Adicionais do Estudo FaCTOS (2022):</h4>
+                         <p class="mb-2">Aumento de 22% na elasticidade da pele, minimizando o aspecto de cicatriz.</p>
+                         <p>Remodelação de cicatrizes em 87% dos casos, demonstrando melhora estética significativa.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="valor" class="py-16 md:py-24 bg-blue-50 fade-in-section">
+            <div class="container mx-auto px-6">
+                <h2 class="text-3xl md:text-4xl font-bold text-center mb-4">Proposta de Valor para a Sua Clínica</h2>
+                <p class="text-center text-gray-600 max-w-3xl mx-auto mb-12">Integrar DERMAREPAIR® em seus protocolos oferece uma proposta de valor clara, elevando a qualidade e a reputação da sua clínica.</p>
+                <div class="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+                    <div class="bg-white p-6 rounded-xl shadow-lg">
+                        <h3 class="text-xl font-semibold text-blue-700 mb-3">Inovação Tecnológica</h3>
+                        <p class="text-gray-700">Posicione sua clínica na vanguarda do pós-operatório capilar com um produto de alta tecnologia e fundamentação científica robusta.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-lg">
+                        <h3 class="text-xl font-semibold text-blue-700 mb-3">Resultados Superiores</h3>
+                        <p class="text-gray-700">Entregue aos seus pacientes uma cicatrização mais rápida, estética e com maior taxa de sucesso nos enxertos.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-lg">
+                        <h3 class="text-xl font-semibold text-blue-700 mb-3">Pacientes Satisfeitos</h3>
+                        <p class="text-gray-700">A melhora do conforto pós-operatório e dos resultados estéticos aumenta significativamente a satisfação e fidelização dos pacientes.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-lg">
+                        <h3 class="text-xl font-semibold text-blue-700 mb-3">Indicações Orgânicas</h3>
+                        <p class="text-gray-700">Pacientes satisfeitos se tornam seus melhores promotores, gerando indicações espontâneas e fortalecendo sua reputação.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-lg md:col-span-2">
+                        <h3 class="text-xl font-semibold text-blue-700 mb-3">Diferencial Competitivo</h3>
+                        <p class="text-gray-700">Destaque-se no mercado oferecendo um cuidado pós-operatório que vai além do convencional, atraindo mais pacientes e solidificando sua posição.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="protocolo" class="py-16 md:py-24 bg-white fade-in-section">
+            <div class="container mx-auto px-6">
+                <h2 class="text-3xl md:text-4xl font-bold text-center mb-4">Protocolo Clínico Otimizado</h2>
+                <p class="text-center text-gray-600 max-w-3xl mx-auto mb-12">A integração do DERMAREPAIR® na prática clínica é simples e direta. O protocolo a seguir foi refinado com base na experiência de mais de 10.000 transplantes para maximizar os resultados tanto na área doadora quanto na receptora.</p>
+                <div class="max-w-4xl mx-auto grid md:grid-cols-2 gap-x-12 gap-y-8">
+                    <div class="border-l-4 border-blue-600 pl-6">
+                        <h3 class="text-2xl font-semibold mb-4">Área Doadora</h3>
+                        <ul class="space-y-4 text-gray-700">
+                            <li>Início: Imediato pós-procedimento.</li>
+                            <li>Frequência: 2x ao dia (manhã e noite).</li>
+                            <li>Duração: Mínimo de 10 dias.</li>
+                            <li>Técnica: Massagem circular suave para focar na remodelação tecidual.</li>
+                            <li>Resultados Esperados: Cicatrização 30-40% mais rápida vs. placebo.</li>
+                        </ul>
+                    </div>
+                    <div class="border-l-4 border-gray-300 pl-6">
+                         <h3 class="text-2xl font-semibold mb-4">Área Receptora <span class="text-base font-normal text-gray-500">(Opcional)</span></h3>
+                         <ul class="space-y-4 text-gray-700">
+                            <li>Início: Após a queda das crostas (Dia 4-5).</li>
+                            <li>Benefício Principal: Estímulo à fase anágena precoce dos folículos.</li>
+                            <li>Técnica: Aplicação suave, sem massagem vigorosa.</li>
+                         </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="teste" class="py-16 md:py-24 fade-in-section">
+            <div class="container mx-auto px-6">
+                 <h2 class="text-3xl md:text-4xl font-bold text-center mb-4">Proposta de Teste Clínico Controlado</h2>
+                 <p class="text-center text-gray-600 max-w-3xl mx-auto mb-12">Convidamos você a comprovar os benefícios do DERMAREPAIR® diretamente na sua prática clínica. Propomos um teste controlado, simples e objetivo, com todo o suporte necessário da nossa equipe para que você possa avaliar os resultados em seus próprios pacientes.</p>
+                <div class="bg-white rounded-xl shadow-lg p-8 max-w-4xl mx-auto">
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <div>
+                             <h4 class="text-xl font-semibold mb-4">Protocolo Sugerido:</h4>
+                            <ul class="space-y-3 list-disc list-inside text-gray-700">
+                                <li>Pacientes: 3 a 4</li>
+                                <li>Foco: Área doadora.</li>
+                                <li>Monitoramento: Dias 0, 5 e 10 (envio de fotos feitas pelo paciente).</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="text-xl font-semibold mb-4">Nosso Suporte:</h4>
+                             <ul class="space-y-3 list-disc list-inside text-gray-700">
+                                 <li>Fornecimento de amostras gratuitas.</li>
+                                 <li>Apoio na análise comparativa dos resultados.</li>
+                             </ul>
+                        </div>
+                    </div>
+                    <div class="text-center mt-10">
+                        <a href="mailto:contato@ezhealth.com.br?subject=Interesse no Teste Clínico DERMAREPAIR" class="bg-blue-600 text-white font-bold px-8 py-4 rounded-lg hover:bg-blue-700 transition-colors text-lg">Desejo Iniciar o Teste Clínico</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="quem-somos" class="py-16 md:py-24 bg-white fade-in-section">
+            <div class="container mx-auto px-6">
+                <h2 class="text-3xl md:text-4xl font-bold text-center mb-4">Quem Somos: EXELDERMA UNIPESSOAL LDA</h2>
+                <p class="text-center text-gray-600 max-w-3xl mx-auto mb-12">Pioneirismo, Inovação e Evidência Científica em Fatores de Crescimento. Desde 2014, focamos na pesquisa, desenvolvimento e aplicação clínica de Fatores de Crescimento (GFC) para regeneração da pele e procedimentos estéticos avançados.</p>
+                
+                <div class="max-w-4xl mx-auto">
+                    <h3 class="text-2xl font-bold mb-8 text-center">Nossa Trajetória:</h3>
+                    <div class="relative pl-4 md:pl-8">
+                        <div class="absolute left-6 md:left-10 top-0 h-full w-0.5 bg-gray-300"></div>
+                        <div class="timeline-item">
+                            <p class="text-blue-700 font-bold mb-1">📍 2014</p>
+                            <ul class="list-disc list-inside space-y-1 text-gray-700">
+                                <li>Fundação da Exelderma UNIPESSOAL LDA</li>
+                                <li>Importação do primeiro lote de DERMAEXEL® da Suíça para testes e ensaios clínicos</li>
+                            </ul>
+                        </div>
+                        <div class="timeline-item">
+                            <p class="text-blue-700 font-bold mb-1">📍 2014–2018</p>
+                            <ul class="list-disc list-inside space-y-1 text-gray-700">
+                                <li>Desenvolvimento do conceito dos GFC como reparadores e regeneradores da pele</li>
+                            </ul>
+                        </div>
+                        <div class="timeline-item">
+                            <p class="text-blue-700 font-bold mb-1">📍 2018–2020</p>
+                            <ul class="list-disc list-inside space-y-1 text-gray-700">
+                                <li>Primeira produção industrial em Portugal (DERMAEXEL® GFC 40ml)</li>
+                                <li>Lançamento do DERMAEXEL® GFC CREME</li>
+                                <li>Introdução dos GFCs em protocolos médicos e transplante capilar</li>
+                            </ul>
+                        </div>
+                        <div class="timeline-item">
+                            <p class="text-blue-700 font-bold mb-1">📍 2022–2023</p>
+                            <ul class="list-disc list-inside space-y-1 text-gray-700">
+                                <li>Conclusão e publicação do estudo clínico FaCTOS</li>
+                                <li>Finalização do estudo sobre prevenção de estrias</li>
+                            </ul>
+                        </div>
+                        <div class="timeline-item">
+                            <p class="text-blue-700 font-bold mb-1">📍 2024–2025</p>
+                            <ul class="list-disc list-inside space-y-1 text-gray-700">
+                                <li>Lançamento do DERMAEXEL® ANTI-ESTRIAS</li>
+                                <li>Rebranding com novo logotipo DERMAREPAIR®</li>
+                                <li>Introdução de embalagem de 400ml para uso clínico especializado</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="container mx-auto px-6 text-center">
+            <p>DERMAREPAIR®</p>
+            <p class="text-sm text-gray-400 mt-2">Inovação e ciência para resultados superiores em transplante capilar.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const ctxHealing = document.getElementById('healingTimeChart');
+            if(ctxHealing) {
+                new Chart(ctxHealing, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Controle', 'DERMAREPAIR®'],
+                        datasets: [{
+                            label: 'Tempo de Cicatrização Relativo (%)',
+                            data: [100, 60],
+                            backgroundColor: ['rgba(211, 211, 211, 0.6)', 'rgba(59, 130, 246, 0.6)'],
+                            borderColor: ['rgba(211, 211, 211, 1)', 'rgba(59, 130, 246, 1)'],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { display: false },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        let label = context.dataset.label || '';
+                                        if (label) { label += ': '; }
+                                        if (context.parsed.y !== null) {
+                                            if(context.dataIndex === 1) {
+                                                label += 'Redução de 40%';
+                                            } else {
+                                                label += 'Linha de Base';
+                                            }
+                                        }
+                                        return label;
+                                    }
+                                }
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                title: { display: true, text: 'Performance Relativa (%)' }
+                            }
+                        }
+                    }
+                });
+            }
+
+            const faders = document.querySelectorAll('.fade-in-section');
+            const appearOptions = {
+                threshold: 0.2,
+                rootMargin: "0px 0px -50px 0px"
+            };
+
+            const appearOnScroll = new IntersectionObserver(function(entries, appearOnScroll) {
+                entries.forEach(entry => {
+                    if (!entry.isIntersecting) {
+                        return;
+                    } else {
+                        entry.target.classList.add('is-visible');
+                        appearOnScroll.unobserve(entry.target);
+                    }
+                });
+            }, appearOptions);
+
+            faders.forEach(fader => {
+                appearOnScroll.observe(fader);
+            });
+        });
+    </script>
+</body>
+</html>
