@@ -100,6 +100,108 @@
             height: calc(100% - 1.25rem);
             background-color: #e5e7eb;
         }
+
+        /* Estilos do Modal Pop-up */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        .modal-overlay.open {
+            opacity: 1;
+            visibility: visible;
+        }
+        .modal-content {
+            background-color: #fff;
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            position: relative;
+            max-width: 90%;
+            max-height: 90%;
+            overflow: auto; /* Permite scroll se o conteúdo for grande */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .modal-content img,
+        .modal-content video {
+            max-width: 100%;
+            max-height: 80vh; /* Ajusta a altura máxima para caber na tela */
+            object-fit: contain;
+            border-radius: 0.5rem;
+        }
+        .modal-close {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 2rem;
+            color: #333;
+            cursor: pointer;
+            background: none;
+            border: none;
+            line-height: 1;
+        }
+
+        /* Styles for the new "Evidências" section layout */
+        .evidence-effect-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
+            margin-top: 2rem;
+            margin-bottom: 4rem;
+            max-width: 7xl;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .evidence-main-phrase {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #3B82F6;
+            text-align: center;
+        }
+
+        .evidence-boxes-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+            width: 100%;
+        }
+
+        .evidence-box-item {
+            background-color: #fff;
+            padding: 1rem 1.5rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            font-weight: 500;
+            color: #4b5563;
+            flex: 1; /* Allow items to grow */
+            min-width: 200px; /* Minimum width before wrapping */
+            max-width: 30%; /* Max width for desktop */
+        }
+
+        @media (max-width: 768px) {
+            .evidence-main-phrase {
+                font-size: 2rem;
+            }
+            .evidence-box-item {
+                max-width: 90%; /* Stack on small screens */
+            }
+        }
     </style>
 </head>
 <body class="antialiased">
@@ -126,8 +228,12 @@
         <section id="hero" class="py-20 md:py-32 bg-white">
             <div class="container mx-auto px-6 text-center">
                 <h1 class="text-4xl md:text-6xl font-bold text-gray-800 mb-4">Otimizando a Cicatrização e Resultados em Transplantes Capilares</h1>
-                <p class="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto mb-8">Descubra como DERMAREPAIR® eleva o padrão do pós-operatório, melhora a satisfação do paciente e consolida a excelência da sua prática clínica.</p>
-                <a href="#teste" class="bg-blue-600 text-white font-bold px-8 py-4 rounded-lg hover:bg-blue-700 transition-colors text-lg">Solicitar Teste Clínico</a>
+                <p class="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto mb-8">
+                    Descubra como DERMAREPAIR® eleva o padrão do pós-operatório, melhora a satisfação do paciente e consolida a excelência da sua prática clínica.
+                    <!-- Imagem da embalagem adicionada aqui -->
+                    <img src="./media/06.dermarepair.embalagem.jpg" alt="Embalagem Dermarepair" class="mt-8 mx-auto w-48 md:w-64 rounded-lg shadow-lg">
+                </p>
+                <!-- O CTA "Solicitar Teste Clínico" foi removido daqui -->
             </div>
         </section>
 
@@ -287,20 +393,21 @@
             <div class="container mx-auto px-6">
                 <h2 class="text-3xl md:text-4xl font-bold text-center mb-4">Evidências Científicas e Resultados Clínicos</h2>
                 <p class="text-center text-gray-600 max-w-3xl mx-auto mb-12">A eficácia do DERMAREPAIR® é suportada por dados quantitativos robustos de estudos laboratoriais e clínicos. Esta seção apresenta os principais resultados que demonstram o impacto do produto na regeneração tecidual e nos desfechos da cicatrização da pele.</p>
-                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
-                    <div class="bg-white p-6 rounded-xl shadow-lg text-center">
-                        <p class="text-5xl font-bold text-blue-600">+1900%</p>
-                        <p class="mt-2 text-gray-700">Aumento na Síntese de Ácido Hialurônico</p>
+                
+                <!-- Nova estrutura para "Aumento significativo" e boxes de síntese -->
+                <div class="evidence-effect-group">
+                    <h3 class="evidence-main-phrase">Aumento significativo na síntese de:</h3>
+                    <div class="evidence-boxes-container">
+                        <div class="evidence-box-item">Ácido Hialurônico</div>
+                        <div class="evidence-box-item">Colágeno Tipo I</div>
+                        <div class="evidence-box-item">Fibronectina</div>
                     </div>
-                     <div class="bg-white p-6 rounded-xl shadow-lg text-center">
-                        <p class="text-5xl font-bold text-blue-600">+140%</p>
-                        <p class="mt-2 text-gray-700">Aumento na Síntese de Colágeno Tipo I</p>
-                    </div>
-                     <div class="bg-white p-6 rounded-xl shadow-lg text-center lg:col-span-1 md:col-span-2">
-                        <p class="text-5xl font-bold text-blue-600">+220%</p>
-                        <p class="mt-2 text-gray-700">Aumento na Síntese de Fibronectina</p>
-                    </div>
+                    <div class="text-blue-600 text-5xl">↓</div> <!-- Seta para baixo -->
                 </div>
+
+                <!-- Novo subtítulo antes do gráfico -->
+                <h3 class="text-xl font-semibold text-center mb-4">Levando a uma redução no tempo de cicatrização:</h3>
+                
                 <div class="max-w-xl mx-auto bg-white p-6 rounded-xl shadow-lg">
                     <h3 class="text-xl font-semibold text-center mb-4">Redução no Tempo de Cicatrização (Área Doadora)</h3>
                     <div class="chart-container">
@@ -330,15 +437,16 @@
                             <p class="mt-1 text-gray-600">de satisfação dos pacientes</p>
                         </div>
                     </div>
-                    <!-- Nova Galeria de Imagens na Seção de Experiência Clínica -->
+                    <!-- Galeria de Imagens na Seção de Experiência Clínica -->
                     <div class="mt-12 text-center">
                         <h4 class="text-xl font-semibold mb-3">Resultados Visuais de Pacientes</h4>
                         <div class="flex flex-wrap justify-center gap-4">
-                            <img src="./media/01.insp.booklet.jpg" alt="Imagem Paciente 1 Pós-Transplante" class="w-full sm:w-1/2 md:w-1/3 lg:w-1/5 h-auto rounded-lg shadow-md object-cover">
-                            <img src="./media/02.insp.booklet.jpg" alt="Imagem Paciente 2 Pós-Transplante" class="w-full sm:w-1/2 md:w-1/3 lg:w-1/5 h-auto rounded-lg shadow-md object-cover">
-                            <img src="./media/03.insp.booklet.jpg" alt="Imagem Paciente 3 Pós-Transplante" class="w-full sm:w-1/2 md:w-1/3 lg:w-1/5 h-auto rounded-lg shadow-md object-cover">
-                            <img src="./media/04.insp.booklet.jpg" alt="Imagem Paciente 4 Pós-Transplante" class="w-full sm:w-1/2 md:w-1/3 lg:w-1/5 h-auto rounded-lg shadow-md object-cover">
-                            <img src="./media/05.insp.protocol.jpg" alt="Imagem Paciente 5 Pós-Transplante" class="w-full sm:w-1/2 md:w-1/3 lg:w-1/5 h-auto rounded-lg shadow-md object-cover">
+                            <!-- Paths corrigidos e evento de clique para pop-up -->
+                            <img src="/media/01.insp.booklet.jpg" alt="Imagem Paciente 1 Pós-Transplante" class="w-full sm:w-1/2 md:w-1/3 lg:w-1/5 h-auto rounded-lg shadow-md object-cover cursor-pointer hover:scale-105 transition-transform duration-200">
+                            <img src="/media/02.insp.booklet.jpg" alt="Imagem Paciente 2 Pós-Transplante" class="w-full sm:w-1/2 md:w-1/3 lg:w-1/5 h-auto rounded-lg shadow-md object-cover cursor-pointer hover:scale-105 transition-transform duration-200">
+                            <img src="/media/03.insp.booklet.jpg" alt="Imagem Paciente 3 Pós-Transplante" class="w-full sm:w-1/2 md:w-1/3 lg:w-1/5 h-auto rounded-lg shadow-md object-cover cursor-pointer hover:scale-105 transition-transform duration-200">
+                            <img src="/media/04.insp.booklet.jpg" alt="Imagem Paciente 4 Pós-Transplante" class="w-full sm:w-1/2 md:w-1/3 lg:w-1/5 h-auto rounded-lg shadow-md object-cover cursor-pointer hover:scale-105 transition-transform duration-200">
+                            <img src="/media/05.insp.protocol.jpg" alt="Imagem Paciente 5 Pós-Transplante" class="w-full sm:w-1/2 md:w-1/3 lg:w-1/5 h-auto rounded-lg shadow-md object-cover cursor-pointer hover:scale-105 transition-transform duration-200">
                         </div>
                         <p class="text-sm text-gray-500 mt-4">Sequência de imagens demonstrando a evolução da cicatrização e resultados capilares em pacientes.</p>
                     </div>
@@ -372,8 +480,9 @@
                     <!-- Vídeo de Demonstração de Aplicação atualizado -->
                     <div class="md:col-span-2 mt-8 text-center">
                         <h4 class="text-xl font-semibold mb-3">Vídeo: Demonstração de Aplicação</h4>
-                        <video controls class="w-full max-w-xl h-auto rounded-lg mx-auto shadow-md">
-                            <source src="./media/50.insp.aplicacao.mp4" type="video/mp4">
+                        <video controls class="w-full max-w-xl h-auto rounded-lg mx-auto shadow-md cursor-pointer hover:scale-105 transition-transform duration-200" id="video-aplicacao">
+                            <!-- Path corrigido e evento de clique para pop-up -->
+                            <source src="/media/50.insp.aplicacao.mp4" type="video/mp4">
                             Seu navegador não suporta a tag de vídeo.
                         </video>
                         <p class="text-sm text-gray-500 mt-2">Demonstração visual do protocolo de aplicação na área doadora.</p>
@@ -471,7 +580,7 @@
                             </ul>
                         </div>
                         <div class="timeline-item">
-                            <p class="text-blue-700 font-bold mb-1">📍 2022–2023</p>
+                            <p class="text-blue-700 font-bold mb-1">� 2022–2023</p>
                             <ul class="list-disc list-inside space-y-1 text-gray-700">
                                 <li>Conclusão e publicação do estudo clínico FaCTOS</li>
                                 <li>Finalização do estudo sobre prevenção de estrias</li>
@@ -498,6 +607,15 @@
             <p class="text-sm text-gray-400 mt-2">Inovação e ciência para resultados superiores em transplante capilar.</p>
         </div>
     </footer>
+
+    <!-- Modal Pop-up Structure -->
+    <div id="mediaModal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="modal-close">&times;</button>
+            <img id="modalImage" src="" alt="Conteúdo em destaque" class="hidden">
+            <video id="modalVideo" src="" controls class="hidden"></video>
+        </div>
+    </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
@@ -567,7 +685,74 @@
             faders.forEach(fader => {
                 appearOnScroll.observe(fader);
             });
+
+            // Lógica do Modal Pop-up
+            const modal = document.getElementById('mediaModal');
+            const modalImage = document.getElementById('modalImage');
+            const modalVideo = document.getElementById('modalVideo');
+            const closeButton = document.querySelector('.modal-close');
+            const galleryImages = document.querySelectorAll('#experiencia img'); // Seleciona todas as imagens na galeria
+            const protocolVideo = document.getElementById('video-aplicacao'); // Seleciona o vídeo no protocolo
+
+            function openModal(src, type) {
+                modalImage.classList.add('hidden');
+                modalVideo.classList.add('hidden');
+                modalVideo.pause(); // Pausa o vídeo se já estiver tocando
+
+                if (type === 'image') {
+                    modalImage.src = src;
+                    modalImage.classList.remove('hidden');
+                } else if (type === 'video') {
+                    modalVideo.src = src;
+                    modalVideo.classList.remove('hidden');
+                    modalVideo.load(); // Recarrega o vídeo para garantir que esteja pronto para tocar no modal
+                    modalVideo.play();
+                }
+                modal.classList.add('open');
+            }
+
+            function closeModal() {
+                modal.classList.remove('open');
+                modalVideo.pause(); // Garante que o vídeo pare ao fechar o modal
+                modalVideo.currentTime = 0; // Reinicia o vídeo
+            }
+
+            // Adiciona evento de clique para as imagens da galeria
+            galleryImages.forEach(img => {
+                img.addEventListener('click', function() {
+                    openModal(this.src, 'image');
+                });
+            });
+
+            // Adiciona evento de clique para o vídeo do protocolo
+            if (protocolVideo) {
+                protocolVideo.addEventListener('click', function() {
+                    // Previne o comportamento padrão do clique no vídeo (abrir em tela cheia, etc.)
+                    // mas permite que os controles internos do vídeo funcionem se o usuário clicar neles.
+                    // Para abrir no modal, o clique em qualquer parte do elemento <video> deve acionar o modal.
+                    // Se o usuário clicar nos controles, o navegador geralmente gerencia isso.
+                    openModal(this.querySelector('source').src, 'video');
+                });
+            }
+
+            // Evento de clique para o botão de fechar
+            closeButton.addEventListener('click', closeModal);
+
+            // Evento de clique no overlay para fechar o modal (mas não no conteúdo do modal)
+            modal.addEventListener('click', function(event) {
+                if (event.target === modal) {
+                    closeModal();
+                }
+            });
+
+            // Evento para fechar com a tecla ESC
+            document.addEventListener('keydown', function(event) {
+                if (event.key === 'Escape' && modal.classList.contains('open')) {
+                    closeModal();
+                }
+            });
         });
     </script>
 </body>
 </html>
+�
