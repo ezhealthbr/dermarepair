@@ -230,8 +230,8 @@
                 <h1 class="text-4xl md:text-6xl font-bold text-gray-800 mb-4">Otimizando a Cicatrização e Resultados em Transplantes Capilares</h1>
                 <p class="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto mb-8">
                     Descubra como DERMAREPAIR® eleva o padrão do pós-operatório, melhora a satisfação do paciente e consolida a excelência da sua prática clínica.
-                    <!-- Imagem da embalagem adicionada aqui -->
-                    <img src="./media/06.dermarepair.embalagem.jpg" alt="Embalagem Dermarepair" class="mt-8 mx-auto w-48 md:w-64 rounded-lg shadow-lg">
+                    <!-- Imagem da embalagem adicionada aqui, com tamanho duplicado e funcionalidade de pop-up -->
+                    <img src="./media/06.dermarepair.embalagem.jpg" alt="Embalagem Dermarepair" class="mt-8 mx-auto w-96 md:w-128 rounded-lg shadow-lg cursor-pointer hover:scale-105 transition-transform duration-200" id="hero-image">
                 </p>
                 <!-- O CTA "Solicitar Teste Clínico" foi removido daqui -->
             </div>
@@ -442,11 +442,11 @@
                         <h4 class="text-xl font-semibold mb-3">Resultados Visuais de Pacientes</h4>
                         <div class="flex flex-wrap justify-center gap-4">
                             <!-- Paths corrigidos e evento de clique para pop-up -->
-                            <img src="/media/01.insp.booklet.jpg" alt="Imagem Paciente 1 Pós-Transplante" class="w-full sm:w-1/2 md:w-1/3 lg:w-1/5 h-auto rounded-lg shadow-md object-cover cursor-pointer hover:scale-105 transition-transform duration-200">
-                            <img src="/media/02.insp.booklet.jpg" alt="Imagem Paciente 2 Pós-Transplante" class="w-full sm:w-1/2 md:w-1/3 lg:w-1/5 h-auto rounded-lg shadow-md object-cover cursor-pointer hover:scale-105 transition-transform duration-200">
-                            <img src="/media/03.insp.booklet.jpg" alt="Imagem Paciente 3 Pós-Transplante" class="w-full sm:w-1/2 md:w-1/3 lg:w-1/5 h-auto rounded-lg shadow-md object-cover cursor-pointer hover:scale-105 transition-transform duration-200">
-                            <img src="/media/04.insp.booklet.jpg" alt="Imagem Paciente 4 Pós-Transplante" class="w-full sm:w-1/2 md:w-1/3 lg:w-1/5 h-auto rounded-lg shadow-md object-cover cursor-pointer hover:scale-105 transition-transform duration-200">
-                            <img src="/media/05.insp.protocol.jpg" alt="Imagem Paciente 5 Pós-Transplante" class="w-full sm:w-1/2 md:w-1/3 lg:w-1/5 h-auto rounded-lg shadow-md object-cover cursor-pointer hover:scale-105 transition-transform duration-200">
+                            <img src="./media/01.insp.booklet.jpg" alt="Imagem Paciente 1 Pós-Transplante" class="w-full sm:w-1/2 md:w-1/3 lg:w-1/5 h-auto rounded-lg shadow-md object-cover cursor-pointer hover:scale-105 transition-transform duration-200">
+                            <img src="./media/02.insp.booklet.jpg" alt="Imagem Paciente 2 Pós-Transplante" class="w-full sm:w-1/2 md:w-1/3 lg:w-1/5 h-auto rounded-lg shadow-md object-cover cursor-pointer hover:scale-105 transition-transform duration-200">
+                            <img src="./media/03.insp.booklet.jpg" alt="Imagem Paciente 3 Pós-Transplante" class="w-full sm:w-1/2 md:w-1/3 lg:w-1/5 h-auto rounded-lg shadow-md object-cover cursor-pointer hover:scale-105 transition-transform duration-200">
+                            <img src="./media/04.insp.booklet.jpg" alt="Imagem Paciente 4 Pós-Transplante" class="w-full sm:w-1/2 md:w-1/3 lg:w-1/5 h-auto rounded-lg shadow-md object-cover cursor-pointer hover:scale-105 transition-transform duration-200">
+                            <img src="./media/05.insp.protocol.jpg" alt="Imagem Paciente 5 Pós-Transplante" class="w-full sm:w-1/2 md:w-1/3 lg:w-1/5 h-auto rounded-lg shadow-md object-cover cursor-pointer hover:scale-105 transition-transform duration-200">
                         </div>
                         <p class="text-sm text-gray-500 mt-4">Sequência de imagens demonstrando a evolução da cicatrização e resultados capilares em pacientes.</p>
                     </div>
@@ -482,7 +482,7 @@
                         <h4 class="text-xl font-semibold mb-3">Vídeo: Demonstração de Aplicação</h4>
                         <video controls class="w-full max-w-xl h-auto rounded-lg mx-auto shadow-md cursor-pointer hover:scale-105 transition-transform duration-200" id="video-aplicacao">
                             <!-- Path corrigido e evento de clique para pop-up -->
-                            <source src="/media/50.insp.aplicacao.mp4" type="video/mp4">
+                            <source src="./media/50.insp.aplicacao.mp4" type="video/mp4">
                             Seu navegador não suporta a tag de vídeo.
                         </video>
                         <p class="text-sm text-gray-500 mt-2">Demonstração visual do protocolo de aplicação na área doadora.</p>
@@ -580,7 +580,7 @@
                             </ul>
                         </div>
                         <div class="timeline-item">
-                            <p class="text-blue-700 font-bold mb-1">� 2022–2023</p>
+                            <p class="text-blue-700 font-bold mb-1">📍 2022–2023</p>
                             <ul class="list-disc list-inside space-y-1 text-gray-700">
                                 <li>Conclusão e publicação do estudo clínico FaCTOS</li>
                                 <li>Finalização do estudo sobre prevenção de estrias</li>
@@ -691,6 +691,7 @@
             const modalImage = document.getElementById('modalImage');
             const modalVideo = document.getElementById('modalVideo');
             const closeButton = document.querySelector('.modal-close');
+            const heroImage = document.getElementById('hero-image'); // A imagem da seção de abertura
             const galleryImages = document.querySelectorAll('#experiencia img'); // Seleciona todas as imagens na galeria
             const protocolVideo = document.getElementById('video-aplicacao'); // Seleciona o vídeo no protocolo
 
@@ -717,6 +718,13 @@
                 modalVideo.currentTime = 0; // Reinicia o vídeo
             }
 
+            // Adiciona evento de clique para a imagem da seção de abertura
+            if (heroImage) {
+                heroImage.addEventListener('click', function() {
+                    openModal(this.src, 'image');
+                });
+            }
+
             // Adiciona evento de clique para as imagens da galeria
             galleryImages.forEach(img => {
                 img.addEventListener('click', function() {
@@ -727,10 +735,6 @@
             // Adiciona evento de clique para o vídeo do protocolo
             if (protocolVideo) {
                 protocolVideo.addEventListener('click', function() {
-                    // Previne o comportamento padrão do clique no vídeo (abrir em tela cheia, etc.)
-                    // mas permite que os controles internos do vídeo funcionem se o usuário clicar neles.
-                    // Para abrir no modal, o clique em qualquer parte do elemento <video> deve acionar o modal.
-                    // Se o usuário clicar nos controles, o navegador geralmente gerencia isso.
                     openModal(this.querySelector('source').src, 'video');
                 });
             }
@@ -755,4 +759,3 @@
     </script>
 </body>
 </html>
-�
