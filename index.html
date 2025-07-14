@@ -101,8 +101,8 @@
             background-color: #e5e7eb;
         }
 
-        /* Estilos do Modal Pop-up */
-        .modal-overlay {
+        /* Estilos do Modal Pop-up (para imagens/vídeos) */
+        .media-modal-overlay {
             position: fixed;
             top: 0;
             left: 0;
@@ -117,11 +117,11 @@
             visibility: hidden;
             transition: opacity 0.3s ease, visibility 0.3s ease;
         }
-        .modal-overlay.open {
+        .media-modal-overlay.open {
             opacity: 1;
             visibility: visible;
         }
-        .modal-content {
+        .media-modal-content {
             background-color: #fff;
             padding: 1.5rem;
             border-radius: 0.75rem;
@@ -134,14 +134,14 @@
             flex-direction: column;
             align-items: center;
         }
-        .modal-content img,
-        .modal-content video {
+        .media-modal-content img,
+        .media-modal-content video {
             max-width: 100%;
             max-height: 80vh; /* Ajusta a altura máxima para caber na tela */
             object-fit: contain;
             border-radius: 0.5rem;
         }
-        .modal-close {
+        .media-modal-close {
             position: absolute;
             top: 10px;
             right: 15px;
@@ -202,9 +202,66 @@
                 max-width: 90%; /* Stack on small screens */
             }
         }
+
+        /* Password Modal Styles */
+        #passwordModal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000; /* Higher z-index to cover everything */
+        }
+        #passwordModalContent {
+            background-color: #fff;
+            padding: 2.5rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+        }
+        #passwordInput {
+            width: 100%;
+            padding: 0.75rem;
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            text-align: center;
+        }
+        #passwordError {
+            color: #ef4444; /* Red color for error */
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+            height: 1.5rem; /* Reserve space to prevent layout shift */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        /* Initially hide main content */
+        main, header, footer {
+            display: none;
+        }
     </style>
 </head>
 <body class="antialiased">
+
+    <!-- Password Modal -->
+    <div id="passwordModal">
+        <div id="passwordModalContent" class="flex flex-col items-center">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4">Acesso Restrito</h2>
+            <p class="text-gray-600 mb-4">Por favor, insira a senha para acessar o conteúdo exclusivo.</p>
+            <input type="password" id="passwordInput" placeholder="Senha">
+            <p id="passwordError" class="text-red-500"></p>
+            <button id="passwordSubmitBtn" class="bg-blue-600 text-white font-bold px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors text-lg mt-4">Acessar</button>
+        </div>
+    </div>
 
     <header class="bg-white/80 backdrop-blur-lg shadow-sm sticky top-0 z-50">
         <nav class="container mx-auto px-6 py-3 flex justify-between items-center">
@@ -502,11 +559,11 @@
                         <h4 class="text-xl font-semibold mb-3">Protocolo e Demais Orientações ao Paciente</h4>
                         <div class="flex flex-wrap justify-center gap-4">
                             <!-- Paths corrigidos e evento de clique para pop-up -->
-                            <img src="./media/01.insp.booklet.jpg" alt="Imagem Paciente 1 Pós-Transplante" class="w-full sm:w-1/2 md:w-1/3 lg:w-1/5 h-auto rounded-lg shadow-md object-cover cursor-pointer hover:scale-105 transition-transform duration-200">
-                            <img src="./media/02.insp.booklet.jpg" alt="Imagem Paciente 2 Pós-Transplante" class="w-full sm:w-1/2 md:w-1/3 lg:w-1/5 h-auto rounded-lg shadow-md object-cover cursor-pointer hover:scale-105 transition-transform duration-200">
-                            <img src="./media/03.insp.booklet.jpg" alt="Imagem Paciente 3 Pós-Transplante" class="w-full sm:w-1/2 md:w-1/3 lg:w-1/5 h-auto rounded-lg shadow-md object-cover cursor-pointer hover:scale-105 transition-transform duration-200">
-                            <img src="./media/04.insp.booklet.jpg" alt="Imagem Paciente 4 Pós-Transplante" class="w-full sm:w-1/2 md:w-1/3 lg:w-1/5 h-auto rounded-lg shadow-md object-cover cursor-pointer hover:scale-105 transition-transform duration-200">
-                            <img src="./media/05.insp.protocol.jpg" alt="Imagem Paciente 5 Pós-Transplante" class="w-full sm:w-1/2 md:w-1/3 lg:w-1/5 h-auto rounded-lg shadow-md object-cover cursor-pointer hover:scale-105 transition-transform duration-200">
+                            <img src="./media/01.insp.booklet.jpg" alt="Imagem do paciente 1 pós-transplante" class="w-full sm:w-1/2 md:w-1/3 lg:w-1/5 h-auto rounded-lg shadow-md object-cover cursor-pointer hover:scale-105 transition-transform duration-200">
+                            <img src="./media/02.insp.booklet.jpg" alt="Imagem do paciente 2 pós-transplante" class="w-full sm:w-1/2 md:w-1/3 lg:w-1/5 h-auto rounded-lg shadow-md object-cover cursor-pointer hover:scale-105 transition-transform duration-200">
+                            <img src="./media/03.insp.booklet.jpg" alt="Imagem do paciente 3 pós-transplante" class="w-full sm:w-1/2 md:w-1/3 lg:w-1/5 h-auto rounded-lg shadow-md object-cover cursor-pointer hover:scale-105 transition-transform duration-200">
+                            <img src="./media/04.insp.booklet.jpg" alt="Imagem do paciente 4 pós-transplante" class="w-full sm:w-1/2 md:w-1/3 lg:w-1/5 h-auto rounded-lg shadow-md object-cover cursor-pointer hover:scale-105 transition-transform duration-200">
+                            <img src="./media/05.insp.protocol.jpg" alt="Imagem do paciente 5 pós-transplante" class="w-full sm:w-1/2 md:w-1/3 lg:w-1/5 h-auto rounded-lg shadow-md object-cover cursor-pointer hover:scale-105 transition-transform duration-200">
                         </div>
                         <p class="text-sm text-gray-500 mt-4">Observe a orientação explícita pra uso do Dermarepair/Dermaexel na zona doadora.</p>
                     </div>
@@ -668,9 +725,9 @@
     </footer>
 
     <!-- Modal Pop-up Structure -->
-    <div id="mediaModal" class="modal-overlay">
-        <div class="modal-content">
-            <button class="modal-close">&times;</button>
+    <div id="mediaModal" class="media-modal-overlay">
+        <div class="media-modal-content">
+            <button class="media-modal-close">&times;</button>
             <img id="modalImage" src="" alt="Conteúdo em destaque" class="hidden">
             <video id="modalVideo" src="" controls class="hidden"></video>
         </div>
@@ -678,6 +735,42 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
+            const CORRECT_PASSWORD = "dermarepair"; // You can change this password
+
+            const passwordModal = document.getElementById('passwordModal');
+            const passwordInput = document.getElementById('passwordInput');
+            const passwordSubmitBtn = document.getElementById('passwordSubmitBtn');
+            const passwordError = document.getElementById('passwordError');
+            const mainContent = document.querySelector('main');
+            const header = document.querySelector('header');
+            const footer = document.querySelector('footer');
+
+            // Function to show main content and hide password modal
+            function showContent() {
+                passwordModal.style.display = 'none';
+                mainContent.style.display = 'block';
+                header.style.display = 'block';
+                footer.style.display = 'block';
+            }
+
+            // Handle password submission
+            passwordSubmitBtn.addEventListener('click', () => {
+                if (passwordInput.value === CORRECT_PASSWORD) {
+                    showContent();
+                } else {
+                    passwordError.textContent = "Senha incorreta. Tente novamente.";
+                    passwordInput.value = ''; // Clear input
+                }
+            });
+
+            // Allow pressing Enter key to submit password
+            passwordInput.addEventListener('keypress', (event) => {
+                if (event.key === 'Enter') {
+                    passwordSubmitBtn.click();
+                }
+            });
+
+            // Chart.js initialization
             const ctxHealing = document.getElementById('healingTimeChart');
             if(ctxHealing) {
                 new Chart(ctxHealing, {
@@ -724,6 +817,7 @@
                 });
             }
 
+            // Fade-in sections logic
             const faders = document.querySelectorAll('.fade-in-section');
             const appearOptions = {
                 threshold: 0.2,
@@ -745,19 +839,19 @@
                 appearOnScroll.observe(fader);
             });
 
-            // Lógica do Modal Pop-up
-            const modal = document.getElementById('mediaModal');
+            // Media Modal Pop-up Logic
+            const mediaModal = document.getElementById('mediaModal');
             const modalImage = document.getElementById('modalImage');
             const modalVideo = document.getElementById('modalVideo');
-            const closeButton = document.querySelector('.modal-close');
-            const heroImage = document.getElementById('hero-image'); // A imagem da seção de abertura
-            const galleryImages = document.querySelectorAll('#experiencia img'); // Seleciona todas as imagens na galeria
-            const protocolVideo = document.getElementById('video-aplicacao'); // Seleciona o vídeo no protocolo
+            const closeMediaButton = document.querySelector('.media-modal-close');
+            const heroImage = document.getElementById('hero-image'); // The image in the hero section
+            const galleryImages = document.querySelectorAll('#experiencia img'); // Select all images in the gallery
+            const protocolVideo = document.getElementById('video-aplicacao'); // Select the video in the protocol section
 
-            function openModal(src, type) {
+            function openMediaModal(src, type) {
                 modalImage.classList.add('hidden');
                 modalVideo.classList.add('hidden');
-                modalVideo.pause(); // Pausa o vídeo se já estiver tocando
+                modalVideo.pause(); // Pause video if already playing
 
                 if (type === 'image') {
                     modalImage.src = src;
@@ -765,53 +859,53 @@
                 } else if (type === 'video') {
                     modalVideo.src = src;
                     modalVideo.classList.remove('hidden');
-                    modalVideo.load(); // Recarrega o vídeo para garantir que esteja pronto para tocar no modal
+                    modalVideo.load(); // Reload video to ensure it's ready to play in the modal
                     modalVideo.play();
                 }
-                modal.classList.add('open');
+                mediaModal.classList.add('open');
             }
 
-            function closeModal() {
-                modal.classList.remove('open');
-                modalVideo.pause(); // Garante que o vídeo pare ao fechar o modal
-                modalVideo.currentTime = 0; // Reinicia o vídeo
+            function closeMediaModal() {
+                mediaModal.classList.remove('open');
+                modalVideo.pause(); // Ensure video stops when closing modal
+                modalVideo.currentTime = 0; // Reset video to beginning
             }
 
-            // Adiciona evento de clique para a imagem da seção de abertura
+            // Add click event for the hero section image
             if (heroImage) {
                 heroImage.addEventListener('click', function() {
-                    openModal(this.src, 'image');
+                    openMediaModal(this.src, 'image');
                 });
             }
 
-            // Adiciona evento de clique para as imagens da galeria
+            // Add click event for gallery images
             galleryImages.forEach(img => {
                 img.addEventListener('click', function() {
-                    openModal(this.src, 'image');
+                    openMediaModal(this.src, 'image');
                 });
             });
 
-            // Adiciona evento de clique para o vídeo do protocolo
+            // Add click event for the protocol video
             if (protocolVideo) {
                 protocolVideo.addEventListener('click', function() {
-                    openModal(this.querySelector('source').src, 'video');
+                    openMediaModal(this.querySelector('source').src, 'video');
                 });
             }
 
-            // Evento de clique para o botão de fechar
-            closeButton.addEventListener('click', closeModal);
+            // Click event for the close button of media modal
+            closeMediaButton.addEventListener('click', closeMediaModal);
 
-            // Evento de clique no overlay para fechar o modal (mas não no conteúdo do modal)
-            modal.addEventListener('click', function(event) {
-                if (event.target === modal) {
-                    closeModal();
+            // Click event on overlay to close media modal (but not on modal content)
+            mediaModal.addEventListener('click', function(event) {
+                if (event.target === mediaModal) {
+                    closeMediaModal();
                 }
             });
 
-            // Evento para fechar com a tecla ESC
+            // Event to close media modal with ESC key
             document.addEventListener('keydown', function(event) {
-                if (event.key === 'Escape' && modal.classList.contains('open')) {
-                    closeModal();
+                if (event.key === 'Escape' && mediaModal.classList.contains('open')) {
+                    closeMediaModal();
                 }
             });
         });
